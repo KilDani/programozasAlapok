@@ -13,12 +13,12 @@ namespace feladatok09._12
             Console.Write("Ird be a neved: ");
             string nev = Console.ReadLine()!;
 
-            Console.WriteLine($"Szia {nev}");
+            Console.WriteLine($"Szia {nev}!");
         }
 
         static void F3() 
         {
-            Console.Write("Irj be egy számot: ");
+            Console.Write("Írj be egy számot: ");
             int? number = null;
 
             do
@@ -182,91 +182,106 @@ namespace feladatok09._12
 
         static void F8()
         {
-            try
-            {
-                Console.Write("Adj meg egy számot: ");
-                int a = int.Parse(Console.ReadLine()!);
-                Console.Write("Adj meg egy másik számot: ");
-                int b = int.Parse(Console.ReadLine()!);
+            int? a = null;
+            int? b = null;
 
-                Console.WriteLine($"Számtani közepe: {(a + b) / 2}");
-                Console.WriteLine($"Mértani közepe: {Math.Sqrt(a * b)}");
-            }
-            catch (FormatException)
+            while (a is null || b is null)
             {
-                Console.WriteLine("A megadott érték nem alakítható át számmá");
+                try
+                {
+                    Console.Write("Adj meg egy számot: ");
+                    a = int.Parse(Console.ReadLine()!);
+                    Console.Write("Adj meg egy másik számot: ");
+                    b = int.Parse(Console.ReadLine()!);
+
+                    Console.WriteLine($"Számtani közepe: {(a + b) / 2}");
+                    Console.WriteLine($"Mértani közepe: {Math.Sqrt((double)(a * b))}");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("A megadott érték nem alakítható át számmá");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine($"A megadott számnak {int.MinValue} és {int.MaxValue} közti értéknek kell lennie, add meg újra: ");
+                }
             }
-            catch (OverflowException)
-            {
-                Console.WriteLine($"A megadott számnak {int.MinValue} és {int.MaxValue} közti értéknek kell lennie, add meg újra: ");
-            }
+
+                
         }
 
         static void F9()
         {
-            try
-            {
-                Console.Write("Adj meg egy számot: ");
-                double a = double.Parse(Console.ReadLine()!);
-                Console.Write("Adj meg egy másik számot: ");
-                double b = double.Parse(Console.ReadLine()!);
-                Console.Write("Adj meg egy harmadik számot: ");
-                double c = double.Parse(Console.ReadLine()!);
+            double? a = null;
+            double? b = null;
+            double? c = null;
 
-                double eredmeny = Math.Sqrt(b * b - (4 * a * c));
+            while (a is null || b is null || c is null)
+            {
+                try
+                {
+                    Console.Write("Adj meg egy számot: ");
+                    a = double.Parse(Console.ReadLine()!);
+                    Console.Write("Adj meg egy másik számot: ");
+                    b = double.Parse(Console.ReadLine()!);
+                    Console.Write("Adj meg egy harmadik számot: ");
+                    c = double.Parse(Console.ReadLine()!);
 
-                if (eredmeny > 0)
-                {
-                    Console.WriteLine("Van megoldás");
+                    double eredmeny = Math.Sqrt((double)(b * b - (4 * a * c)));
+
+                    if (eredmeny >= 0)
+                    {
+                        Console.WriteLine("Van megoldás");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nincs megoldás");
+                    }
                 }
-                else
+                catch (FormatException)
                 {
-                    Console.WriteLine("Nincs megoldás");
+                    Console.WriteLine("A megadott érték nem alakítható át számmá");
                 }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("A megadott érték nem alakítható át számmá");
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("Hiba");
-            }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("A megadott szám vagy túl nagy, vagy túl kicsi");
+                }
+            }        
         }
 
         static void F10()
         {
-            try
-            {
-                Console.Write("a = ");
-                double a = double.Parse(Console.ReadLine()!);
-                Console.Write("b = ");
-                double b = double.Parse(Console.ReadLine()!);
-                Console.Write("c = ");
-                double c = double.Parse(Console.ReadLine()!);
-
-                double megoldhato = Math.Sqrt((b * b) - (4 * a * c));
-                double eredmeny1 = (-b + Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
-                double eredmeny2 = (-b - Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
-
-                if (megoldhato > 0)
+                try
                 {
-                    Console.WriteLine($"x1: {eredmeny1}");
-                    Console.WriteLine($"x2: {eredmeny2}");
+                    Console.Write("a = ");
+                    double a = double.Parse(Console.ReadLine()!);
+                    Console.Write("b = ");
+                    double b = double.Parse(Console.ReadLine()!);
+                    Console.Write("c = ");
+                    double c = double.Parse(Console.ReadLine()!);
+
+                    double megoldhato = Math.Sqrt((b * b) - (4 * a * c));
+                    double eredmeny1 = (-b + Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
+                    double eredmeny2 = (-b - Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
+
+                    if (megoldhato >= 0)
+                    {
+                        Console.WriteLine($"x1: {eredmeny1}");
+                        Console.WriteLine($"x2: {eredmeny2}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nincs megoldás");
+                    }
                 }
-                else
+                catch (FormatException)
                 {
-                    Console.WriteLine("Nincs megoldás");
+                    Console.WriteLine("A megadott érték nem alakítható át számmá");
                 }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("A megadott érték nem alakítható át számmá");
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("Hiba");
-            }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("A megadott szám vagy túl nagy, vagy túl kicsi");
+                }
         }
 
         static void F11()
@@ -280,7 +295,7 @@ namespace feladatok09._12
 
                 double c = Math.Sqrt((b * b) + (a * a));
 
-                Console.WriteLine($"{c:f2}");
+                Console.WriteLine($"{c:f2}"); 
             }
             catch (FormatException)
             {
@@ -288,7 +303,7 @@ namespace feladatok09._12
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Hiba");
+                Console.WriteLine("A megadott szám vagy túl nagy, vagy túl kicsi");
             }
         }
 
@@ -296,11 +311,11 @@ namespace feladatok09._12
         {
             try
             {
-                Console.Write("Add meg az x tengelyt: ");
+                Console.Write("Add meg az a oldalt: ");
                 int x = int.Parse(Console.ReadLine()!);
-                Console.Write("Add meg az y tengelyt: ");
+                Console.Write("Add meg a b oldalt: ");
                 int y = int.Parse(Console.ReadLine()!);
-                Console.Write("Add meg a z tengelyt: ");
+                Console.Write("Add meg a c oldalt: ");
                 int z = int.Parse(Console.ReadLine()!);
 
                 int felszin = 2 * (x * y + y * z + z * x);
@@ -337,7 +352,7 @@ namespace feladatok09._12
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Hiba");
+                Console.WriteLine("A megadott szám vagy túl nagy, vagy túl kicsi");
             }
         }
 
@@ -361,14 +376,93 @@ namespace feladatok09._12
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Hiba");
+                Console.WriteLine("A megadott szám vagy túl nagy, vagy túl kicsi");
             }
 
         }
 
+        static void F15()
+        {
+            Console.Write("Adj meg egy pozitív egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+
+            if (num > 0)
+            {
+                for (global::System.Int32 i = 1; i < num+1; i++)
+                {
+                    Console.Write(i+" ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("A szám nem pozitív egész szám");
+            }
+
+        }
+
+        static void F16()
+        {
+            Console.Write("Adj meg egy pozitív egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+
+            if (num > 0)
+            {
+                for (global::System.Int32 i = 1; i < num + 1; i++)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+            else
+            {
+                Console.WriteLine("A szám nem pozitív egész szám");
+            }
+        }
+
+        static void F17()
+        {
+            Console.Write("Adj meg egy pozitív egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+
+            if (num > 0)
+            {
+                for (global::System.Int32 i = 1; i < num + 1; i++)
+                {
+                    if (num % i == 0)
+                    {
+                        Console.Write(i+", ");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("A szám nem pozitív egész szám");
+            }
+        }
+
+        static void F18()
+        {
+            Console.Write("Adj meg egy pozitív egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+            int n = 0;
+
+            if (num > 0)
+            {
+                for (global::System.Int32 i = 1; i < num + 1; i++)
+                {
+                    if (num % i == 0)
+                    {
+                        n = i;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("A szám nem pozitív egész szám");
+            }
+        }
         static void Main(string[] args)
         {
-
+            F17();
         }
     }
 }
