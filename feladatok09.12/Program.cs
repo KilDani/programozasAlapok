@@ -429,7 +429,7 @@ namespace feladatok09._12
                 {
                     if (num % i == 0)
                     {
-                        Console.Write(i+", ");
+                        Console.Write($"{i}, ");
                     }
                 }
             }
@@ -451,7 +451,7 @@ namespace feladatok09._12
                 {
                     if (num % i == 0)
                     {
-                        n = i;
+                        n += i;
                     }
                 }
             }
@@ -459,10 +459,133 @@ namespace feladatok09._12
             {
                 Console.WriteLine("A szám nem pozitív egész szám");
             }
+            Console.WriteLine($"A szám osztóinak összege: {n}");
         }
+
+        static void F19() 
+        {
+            Console.Write("Adj meg egy pozitív egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+            int n = 0;
+
+            if (num > 0)
+            {
+                for (global::System.Int32 i = 1; i < num + 1; i++)
+                {
+                    if (num % i == 0)
+                    {
+                        n += i;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("A szám nem pozitív egész szám");
+            }
+            if (n == num * 2)
+            {
+                Console.WriteLine("Tökéletes szám");
+            }
+            else
+            {
+                Console.WriteLine("Nem tökéletes szám");
+            }
+        }
+
+        static void F20()
+        {
+            Console.Write("Hatványalap: ");
+            int num1 = int.Parse(Console.ReadLine()!);
+            Console.Write("Kitevő: ");
+            int num2 = int.Parse(Console.ReadLine()!);
+            int result = 1;
+
+            for (int i = 0; i < num2; i++)
+            {
+                result *= num1;
+            }
+            Console.WriteLine($"Hatványérték: {result}");
+        }
+
+        static void F21() 
+        {
+            int num = 1;
+            while (num > 0)
+            {
+                Console.Write("Írj be egy pozitív számot: ");
+                num = int.Parse(Console.ReadLine()!);
+            }
+        }
+
+        static void F22()
+        {
+            int num = 0;
+            int result = 0;
+            while (num < 10)
+            {
+                Console.Write("Írj be egy számot: ");
+                num = int.Parse(Console.ReadLine()!);
+                result += num;
+            }
+            Console.WriteLine($"A számok összege: {result}");
+        }
+
+        static void F24() 
+        {
+            string input = "";
+            while (input != "alma")
+            {
+                Console.Write("Írj be egy szót: ");
+                input = Console.ReadLine()!;
+            }
+
+            Console.WriteLine("Az alma gyümölcs!");
+        }
+
+        static void F25()
+        {
+            Console.Write("Írj be egy egész számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+
+            int original = num;
+            int n = 0;
+
+            while (num >= 3)
+            {
+                num -= 3;
+                n++;
+            }
+
+            Console.WriteLine($"{original} = {n}*3 + {num}");
+        }
+
+        static void F26()
+        {
+            Console.Write("Írj be egy számot: ");
+            int num = int.Parse(Console.ReadLine()!);
+
+            int n = 0;
+
+            for (int i = 1; i < num+1; i++)
+            {
+                if(num % i == 0)
+                {
+                    n++;
+                }
+            }
+            if (n == 2)
+            {
+                Console.WriteLine("Prímszám");
+            }
+            else
+            {
+                Console.WriteLine("Nem prímszám");
+            }
+        }
+
         static void Main(string[] args)
         {
-            F17();
+           
         }
     }
 }
