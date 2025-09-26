@@ -738,10 +738,43 @@ namespace feladatok09._12
                 }
             }
         }
+        /*Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+            while (Console.ReadKey().Key == ConsoleKey.DownArrow) 
+            {
+                Console.Write('|');
+                Console.CursorTop++;
+                Console.CursorLeft--;
+            }*/
 
         static void Main(string[] args)
         {
-            F40();
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+            while (true)
+            {
+                var key = Console.ReadKey().Key;
+                switch (key)
+                {
+                    case ConsoleKey.DownArrow:
+                        Console.Write('v');
+                        Console.CursorTop++;
+                        Console.CursorLeft--;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        Console.Write('˄');
+                        Console.CursorTop--;
+                        Console.CursorLeft--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Console.Write('>');
+                        Console.CursorLeft++;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        Console.Write('<');
+                        Console.CursorLeft--;
+                        Console.CursorLeft--;
+                        break;
+                }
+            }
         }
     }
 }
