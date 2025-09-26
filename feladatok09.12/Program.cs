@@ -620,7 +620,7 @@ namespace feladatok09._12
 
         static void F34()
         {
-            
+
         }
 
         static void F35() 
@@ -636,13 +636,112 @@ namespace feladatok09._12
 
         static void F36() 
         { 
-            
+            Console.Write("Írd be a sorok számát: ");
+            int row = askForInt();
+            Console.Write("Írd be az oszlopok számát: ");
+            int column = askForInt();
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++) 
+                {
+                    if (i % 2 == 0)
+                    {
+                        Console.Write("OX");
+                    }
+                    else
+                    {
+                        Console.Write("XO");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
 
+        static void F37()
+        {
+            Console.Write("Írd be a sorok számát: ");
+            int row = askForInt();
+            string line = "*";
+
+            for (int i = 0; i < row ; i++)
+            {
+                Console.WriteLine(line);
+                line += "**";
+            }
+        }
+
+        static void F38()
+        {
+            Console.Write("Írd be a sorok számát: ");
+            int row = askForInt();
+            int n = row;
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
+                {
+                    Console.Write(" ");
+                }
+                n--;
+                for (int k = 0; k < (2 * i) + 1; k++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void F39()
+        {
+            Console.Write("Írd be a sorok számát: ");
+            int row = askForInt();
+            Console.Write("Írd be az oszlopok számát: ");
+            int col = askForInt();
+
+            for (int N = 1; N < row+1; N++)
+            {
+                for (int M = 1; M < col+1; M++)
+                {
+                    if (N == 1 || M == 1 || N == row || M == col)
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void F40()
+        {
+            Console.Write("Írj be egy számot: ");
+            int num = askForInt();  
+
+            for (int i = 1; i < num + 1; i++)
+            {
+                int n = 0;
+                for (int j = 1; j < i + 1; j++)
+                {
+                    if (i % j == 0)
+                    {
+                        
+                        n++;
+                    }
+                }
+                if (num == n*2)
+                {
+                    Console.WriteLine($"{n*2} ");
+                }
+            }
+        }
 
         static void Main(string[] args)
         {
-
+            F40();
         }
     }
 }
