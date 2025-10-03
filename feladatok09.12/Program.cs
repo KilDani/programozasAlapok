@@ -816,7 +816,7 @@ namespace feladatok09._12
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
 
             int color = 0;
-            int theme = 15;
+            int theme = 0;
             int e = 0;
             bool r = false;
 
@@ -829,8 +829,7 @@ namespace feladatok09._12
                     case ConsoleKey.DownArrow:
                         if (r == true)
                         {
-                            Console.ForegroundColor = (ConsoleColor)theme;
-                            Console.Write('█');
+                            Console.Write(' ');
                             Console.CursorTop++;
                             Console.CursorLeft--;
                         }
@@ -859,8 +858,7 @@ namespace feladatok09._12
                     case ConsoleKey.UpArrow:
                         if (r == true)
                         {
-                            Console.ForegroundColor = (ConsoleColor)theme;
-                            Console.Write('█');
+                            Console.Write(' ');
                             Console.CursorTop--;
                             Console.CursorLeft--;
                         }
@@ -889,8 +887,7 @@ namespace feladatok09._12
                     case ConsoleKey.RightArrow:
                         if(r == true)
                         {
-                            Console.ForegroundColor = (ConsoleColor)theme;
-                            Console.Write('█');
+                            Console.Write(' ');
                         }
                         else
                         {
@@ -913,8 +910,7 @@ namespace feladatok09._12
                     case ConsoleKey.LeftArrow:
                         if (r == true)
                         {
-                            Console.ForegroundColor = (ConsoleColor)theme;
-                            Console.Write('█');
+                            Console.Write(' ');
                             Console.CursorLeft--;
                             Console.CursorLeft--;
                         }
