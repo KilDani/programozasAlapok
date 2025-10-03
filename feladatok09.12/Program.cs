@@ -746,9 +746,9 @@ namespace feladatok09._12
                 Console.CursorLeft--;
             }*/
 
-        static void Main(string[] args)
-        {
-            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+
+        /*
+         Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
             while (true)
             {
                 var key = Console.ReadKey().Key;
@@ -772,6 +772,208 @@ namespace feladatok09._12
                         Console.Write('<');
                         Console.CursorLeft--;
                         Console.CursorLeft--;
+                        break;
+                }
+            }
+         */
+
+        /*while (true)
+            {
+                var key = Console.ReadKey().Key;
+                switch (key)
+                {
+                    case ConsoleKey.Spacebar:
+                    Console.Write(' ');
+                    break;
+                }
+            }
+         */
+
+        /*case ConsoleKey.Spacebar:
+                        if (theme == false)
+                        {
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Clear();
+                            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+                            theme = true;
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+                            Console.Clear();
+                            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+                            theme = false;
+                        }
+                        break;
+         */
+
+        static void Main(string[] args)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.BufferHeight = Console.WindowHeight;
+            Console.Title = "NE NÉZD A CÍMÉT!";
+            Console.CursorSize = 100;
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+
+            int color = 0;
+            int theme = 15;
+            int e = 0;
+            bool r = false;
+
+            while (true)
+            {
+
+                var key = Console.ReadKey().Key;
+                switch (key)
+                {
+                    case ConsoleKey.DownArrow:
+                        if (r == true)
+                        {
+                            Console.ForegroundColor = (ConsoleColor)theme;
+                            Console.Write('█');
+                            Console.CursorTop++;
+                            Console.CursorLeft--;
+                        }
+                        else
+                        {
+                            if (e == 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write('♥');
+                                Console.CursorTop++;
+                                Console.CursorLeft--;
+                            }
+                            else if (e == 1)
+                            {
+                                Console.ForegroundColor = (ConsoleColor)color;
+                                Console.Write('█');
+                                Console.CursorTop++;
+                                Console.CursorLeft--;
+                            }
+                            else
+                            {
+                                Console.CursorTop++;
+                            }
+                        }
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (r == true)
+                        {
+                            Console.ForegroundColor = (ConsoleColor)theme;
+                            Console.Write('█');
+                            Console.CursorTop--;
+                            Console.CursorLeft--;
+                        }
+                        else
+                        {
+                            if (e == 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write('♦');
+                                Console.CursorTop--;
+                                Console.CursorLeft--;
+                            }
+                            else if (e == 1)
+                            {
+                                Console.ForegroundColor = (ConsoleColor)color;
+                                Console.Write('█');
+                                Console.CursorTop--;
+                                Console.CursorLeft--;
+                            }
+                            else
+                            {
+                                Console.CursorTop--;
+                            }
+                        }
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if(r == true)
+                        {
+                            Console.ForegroundColor = (ConsoleColor)theme;
+                            Console.Write('█');
+                        }
+                        else
+                        {
+                            if (e == 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.Write('♠');
+                            }
+                            else if (e == 1)
+                            {
+                                Console.ForegroundColor = (ConsoleColor)color;
+                                Console.Write('█');
+                            }
+                            else
+                            {
+                                Console.CursorLeft++;
+                            }
+                        }
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (r == true)
+                        {
+                            Console.ForegroundColor = (ConsoleColor)theme;
+                            Console.Write('█');
+                            Console.CursorLeft--;
+                            Console.CursorLeft--;
+                        }
+                        else
+                        {
+                            if (e == 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.Write('♣');
+                                Console.CursorLeft--;
+                                Console.CursorLeft--;
+                            }
+                            else if (e == 1)
+                            {
+                                Console.ForegroundColor = Console.ForegroundColor = (ConsoleColor)color;
+                                Console.Write('█');
+                                Console.CursorLeft--;
+                                Console.CursorLeft--;
+                            }
+                            else
+                            {
+                                Console.CursorLeft--;
+                                Console.CursorLeft--;
+                            }
+                        }
+                        break;
+
+                    case ConsoleKey.Spacebar:
+                        theme++;
+                        if (theme == 16)
+                        {
+                            theme = 0;
+                        }
+                        Console.BackgroundColor = (ConsoleColor)theme;
+                        Console.Clear();
+                        Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+                        break;
+
+                    case ConsoleKey.R:
+                        r = !r;
+                        Console.Write("\b \b");
+                        break;
+
+                    case ConsoleKey.E:
+                        color++;
+                        if (color == 16)
+                        {
+                            color = 0;
+                        }
+                        Console.Write("\b \b");
+                        break;
+
+                    case ConsoleKey.Q:
+                        Console.Write("\b \b");
+                        e++;
+                        if (e == 3)
+                        {
+                            e = 0;
+                        }
                         break;
                 }
             }
