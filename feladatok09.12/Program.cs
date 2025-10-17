@@ -822,6 +822,46 @@ namespace feladatok09._12
 
             while (true)
             {
+                if (r == true)
+                {
+                    (int x, int y) = Console.GetCursorPosition();
+                    Console.CursorTop = 0;
+                    Console.CursorLeft = 0;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("RADÍR  ");
+                    Console.SetCursorPosition(x, y);
+                }
+                else {
+                    (int x, int y) = Console.GetCursorPosition();
+                    if (e == 0)
+                    {
+                        Console.CursorTop = 0;
+                        Console.CursorLeft = 0;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("MINTA  ");
+                        Console.SetCursorPosition(x, y);
+                    }
+                    else if (e == 1)
+                    {
+                        Console.CursorTop = 0;
+                        Console.CursorLeft = 0;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("SZÍN:  ");
+                        Console.CursorTop = 0;
+                        Console.CursorLeft = 5;
+                        Console.ForegroundColor = (ConsoleColor)color;
+                        Console.Write('█');
+                        Console.SetCursorPosition(x, y);
+                    }
+                    else
+                    {
+                        Console.CursorTop = 0;
+                        Console.CursorLeft = 0;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("MOZGÁS ");
+                        Console.SetCursorPosition(x, y);
+                    }
+                }
 
                 var key = Console.ReadKey().Key;
                 switch (key)
