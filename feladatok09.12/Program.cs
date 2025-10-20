@@ -819,48 +819,113 @@ namespace feladatok09._12
             int theme = 0;
             int e = 0;
             bool r = false;
+            bool f = false;
 
             while (true)
             {
-                if (r == true)
+                (int x, int y) = Console.GetCursorPosition();
+
+                Console.SetCursorPosition(0, Console.WindowTop + 1);
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.White;
+                for (int i = 0; i < Console.WindowWidth; i++)
                 {
-                    (int x, int y) = Console.GetCursorPosition();
-                    Console.CursorTop = 0;
-                    Console.CursorLeft = 0;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write("RADÍR  ");
-                    Console.SetCursorPosition(x, y);
+                    Console.Write("▄");
                 }
-                else {
-                    (int x, int y) = Console.GetCursorPosition();
-                    if (e == 0)
+                Console.SetCursorPosition(0, Console.WindowTop);
+                Console.BackgroundColor = ConsoleColor.White;
+                for (int i = 0; i < Console.WindowWidth; i++)
+                {
+                    Console.Write(" ");
+                }
+
+
+                if (f == true)
+                {
+                    if (r == true)
                     {
                         Console.CursorTop = 0;
                         Console.CursorLeft = 0;
                         Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write("MINTA  ");
-                        Console.SetCursorPosition(x, y);
-                    }
-                    else if (e == 1)
-                    {
+                        Console.Write("RADÍR   ║ KÖV.HÁTTÉR: ");
                         Console.CursorTop = 0;
-                        Console.CursorLeft = 0;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write("SZÍN:  ");
-                        Console.CursorTop = 0;
-                        Console.CursorLeft = 5;
-                        Console.ForegroundColor = (ConsoleColor)color;
+                        Console.CursorLeft = 21;
+                        if (theme == 15)
+                        {
+                            theme = 0;
+                        }
+                        Console.ForegroundColor = (ConsoleColor)theme+1;
                         Console.Write('█');
-                        Console.SetCursorPosition(x, y);
+
                     }
                     else
                     {
-                        Console.CursorTop = 0;
-                        Console.CursorLeft = 0;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write("MOZGÁS ");
-                        Console.SetCursorPosition(x, y);
+                        if (e == 0)
+                        {
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 0;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.Write("MINTA  ║ KÖV.HÁTTÉR: ");
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 21;
+                            if(theme == 15)
+                            {
+                                theme = 0;
+                            }
+                            Console.ForegroundColor = (ConsoleColor)theme + 1;
+                            Console.Write('█');
+
+                        }
+                        else if (e == 1)
+                        {
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 0;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.Write("SZÍN:  ║ KÖV.HÁTTÉR: ");
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 21;
+                            if (theme == 15)
+                            {
+                                theme = 0;
+                            }
+                            Console.ForegroundColor = (ConsoleColor)theme + 1;
+                            Console.Write('█');
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 5;
+                            Console.ForegroundColor = (ConsoleColor)color;
+                            Console.Write('█');
+                            
+                        }
+                        else
+                        {
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 0;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.Write("MOZGÁS ║ KÖV.HÁTTÉR: ");
+                            Console.CursorTop = 0;
+                            Console.CursorLeft = 21;
+                            if (theme == 15)
+                            {
+                                theme = 0;
+                            }
+                            Console.ForegroundColor = (ConsoleColor)theme + 1;
+                            Console.Write('█');
+
+                        }
                     }
+                }
+                else
+                {
+                    Console.CursorTop = 0;
+                    Console.CursorLeft = 0;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("       ");
+                    Console.SetCursorPosition(x, y);
+                }
+                Console.SetCursorPosition(x, y);
+                if (y == 1)
+                {
+                    Console.CursorTop++;
                 }
 
                 var key = Console.ReadKey().Key;
@@ -877,6 +942,7 @@ namespace feladatok09._12
                         {
                             if (e == 0)
                             {
+                                Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write('♥');
                                 Console.CursorTop++;
@@ -906,6 +972,7 @@ namespace feladatok09._12
                         {
                             if (e == 0)
                             {
+                                Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write('♦');
                                 Console.CursorTop--;
@@ -933,6 +1000,7 @@ namespace feladatok09._12
                         {
                             if (e == 0)
                             {
+                                Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('♠');
                             }
@@ -958,6 +1026,7 @@ namespace feladatok09._12
                         {
                             if (e == 0)
                             {
+                                Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('♣');
                                 Console.CursorLeft--;
@@ -1010,6 +1079,10 @@ namespace feladatok09._12
                         {
                             e = 0;
                         }
+                        break;
+
+                    case ConsoleKey.F1:
+                        f = !f;
                         break;
                 }
             }
