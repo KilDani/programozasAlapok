@@ -943,15 +943,18 @@ namespace feladatok09._12
                         Console.Clear();
                         Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
                     }
-                    continue;
-                }
-
-                if (showHelp)
-                {
-                    continue;
                 }
 
                 (int currentX, int currentY) = Console.GetCursorPosition();
+
+                if (currentX >= Console.WindowWidth)
+                    Console.CursorLeft = Console.WindowWidth - 1;
+                if (currentY >= Console.WindowHeight)
+                    Console.CursorTop = Console.WindowHeight - 1;
+                if (currentX < 0)
+                    Console.CursorLeft = 0;
+                if (currentY < 0)
+                    Console.CursorTop = 0;
 
                 switch (key)
                 {
@@ -1133,22 +1136,14 @@ namespace feladatok09._12
                         f = !f;
                         break;
                 }
-
-                (currentX, currentY) = Console.GetCursorPosition();
-                if (currentX >= Console.WindowWidth)
-                    Console.CursorLeft = Console.WindowWidth - 1;
-                if (currentY >= Console.WindowHeight)
-                    Console.CursorTop = Console.WindowHeight - 1;
-                if (currentX < 0)
-                    Console.CursorLeft = 0;
-                if (currentY < 0)
-                    Console.CursorTop = 0;
             }
         }
 
         static void ShowHelpMenu()
         {
             Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
 
             int centerX = Console.WindowWidth / 2;
             int startY = 2;
@@ -1157,26 +1152,26 @@ namespace feladatok09._12
             Console.SetCursorPosition(centerX - title.Length / 2, startY);
             Console.Write(title);
 
-            string[] helpItems = {
-                "← ↑ ↓ →   , Kurzor mozgatás",
+            string[] help = {
+                "← ↑ ↓ →   , Kurzor mozgatás       ",
                 "SPACE     , Háttérszín változtatás",
-                "R         , Radír be vagy ki",
-                "E         , Szín változtatás",
-                "Q         , Mód váltás",
-                "F1        , Infosor be vagy ki",
-                "ESC       , Segítség be vagy ki"
+                "R         , Radír                 ",
+                "E         , Szín változtatás      ",
+                "Q         , Mód váltás            ",
+                "F1        , Infosor               ",
+                "ESC       , Segítség              "
             };
 
-            for (int i = 0; i < helpItems.Length; i++)
+            for (int i = 0; i < help.Length; i++)
             {
-                int x = centerX - helpItems[i].Length / 2;
-                Console.SetCursorPosition(x, startY + 2 + i);
-                Console.Write(helpItems[i]);
+                int x = centerX - help[i].Length / 2;
+                Console.SetCursorPosition(x, help.Length / 2 + i);
+                Console.Write(help[i]);
             }
 
-            string exitMsg = "Nyomj ESC-et a folytatáshoz";
-            Console.SetCursorPosition(centerX - exitMsg.Length / 2, startY + helpItems.Length + 4);
-            Console.Write(exitMsg);
+            string esc = "Nyomj ESC-et a folytatáshoz";
+            Console.SetCursorPosition(centerX - esc.Length / 2, startY + help.Length + 4);
+            Console.Write(esc);
         }
     }
 }
