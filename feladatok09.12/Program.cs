@@ -426,6 +426,19 @@ namespace feladatok09._12
                     case ConsoleKey.F1:
                         f = !f;
                         break;
+
+                    case ConsoleKey.S:
+                        Save("kep.csv", pixels);
+                        Console.Write("\b \b");
+                        Console.SetCursorPosition(currentX, currentY);
+                        break;
+
+                    case ConsoleKey.L:
+                        Console.Clear();
+                        pixels = Load("kep.csv");
+                        DrawPixels(pixels);
+                        Console.Write("\b \b");
+                        break;
                 }
             }
         }
@@ -449,6 +462,8 @@ namespace feladatok09._12
                 "R         , Radír                 ",
                 "E         , Szín változtatás      ",
                 "Q         , Mód váltás            ",
+                "S         , Mentés                ",
+                "L         , Betöltés              ",
                 "F1        , Infosor               ",
                 "ESC       , Segítség              "
             };
@@ -473,6 +488,31 @@ namespace feladatok09._12
                 {
                     streamW.WriteLine(pixel.ToCsv());
                 }
+            }
+        }
+        static List<Pixel> Load(string filename)
+        {
+            List<Pixel> loadedPixels = new List<Pixel>();
+            if (!File.Exists(filename))
+                return loadedPixels;
+
+            string[] lines = File.ReadAllLines(filename);
+
+            foreach (string line in lines)
+            {
+                loadedPixels.Add(Pixel.FromCsv(line));
+            }
+
+            return loadedPixels;
+        }
+        static void DrawPixels(List<Pixel> pixels)
+        {
+            foreach (var pixel in pixels)
+            {
+                Console.SetCursorPosition(pixel.X, pixel.Y);
+                Console.ForegroundColor = pixel.Foreground;
+                Console.BackgroundColor = pixel.Background;
+                Console.Write(pixel.Symbol);
             }
         }
     }
