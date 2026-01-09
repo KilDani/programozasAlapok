@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.IO;
 
 namespace feladatok09._12
 {
@@ -39,6 +41,7 @@ namespace feladatok09._12
             Console.CursorSize = 100;
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
 
+            List<Pixel> pixels = new List<Pixel>();
             int color = 0;
             int theme = 0;
             int e = 0;
@@ -197,6 +200,14 @@ namespace feladatok09._12
                                 Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write('♥');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '♥'
+                                });
                                 if (currentY < Console.WindowHeight - 1)
                                     Console.CursorTop++;
                                 Console.CursorLeft--;
@@ -205,6 +216,14 @@ namespace feladatok09._12
                             {
                                 Console.ForegroundColor = (ConsoleColor)color;
                                 Console.Write('█');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '█'
+                                });
                                 if (currentY < Console.WindowHeight - 1)
                                     Console.CursorTop++;
                                 Console.CursorLeft--;
@@ -232,6 +251,14 @@ namespace feladatok09._12
                                 Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write('♦');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '♦'
+                                });
                                 if (currentY > 0)
                                     Console.CursorTop--;
                                 Console.CursorLeft--;
@@ -240,6 +267,14 @@ namespace feladatok09._12
                             {
                                 Console.ForegroundColor = (ConsoleColor)color;
                                 Console.Write('█');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '█'
+                                });
                                 if (currentY > 0)
                                     Console.CursorTop--;
                                 Console.CursorLeft--;
@@ -264,11 +299,27 @@ namespace feladatok09._12
                                 Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('♠');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '♠'
+                                });
                             }
                             else if (e == 1)
                             {
                                 Console.ForegroundColor = (ConsoleColor)color;
                                 Console.Write('█');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '█'
+                                });
                             }
                             else
                             {
@@ -295,6 +346,14 @@ namespace feladatok09._12
                                 Console.BackgroundColor = (ConsoleColor)theme;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('♣');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '♣'
+                                });
                                 if (currentX > 0)
                                 {
                                     Console.CursorLeft--;
@@ -305,6 +364,14 @@ namespace feladatok09._12
                             {
                                 Console.ForegroundColor = (ConsoleColor)color;
                                 Console.Write('█');
+                                pixels.Add(new Pixel()
+                                {
+                                    X = currentX,
+                                    Y = currentY,
+                                    Foreground = (ConsoleColor)color,
+                                    Background = (ConsoleColor)theme,
+                                    Symbol = '█'
+                                });
                                 if (currentX > 0)
                                 {
                                     Console.CursorLeft--;
@@ -398,9 +465,15 @@ namespace feladatok09._12
             Console.Write(esc);
         }
 
-        static void Save(string filename)
+        static void Save(string filename, List<Pixel> pixels)
         {
-            
+            using (StreamWriter streamW = new StreamWriter(filename))
+            {
+                foreach (var pixel in pixels)
+                {
+                    streamW.WriteLine(pixel.ToCsv());
+                }
+            }
         }
     }
 }
