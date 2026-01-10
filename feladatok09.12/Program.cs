@@ -428,16 +428,28 @@ namespace feladatok09._12
                         break;
 
                     case ConsoleKey.S:
-                        Save("kep.csv", pixels);
+                        Console.SetCursorPosition(0, Console.WindowHeight - 1);
+                        Console.Write("Mentés neve: ");
+                        string saveName = Console.ReadLine();
+                        Save(saveName + ".csv", pixels);
                         Console.Write("\b \b");
                         Console.SetCursorPosition(currentX, currentY);
                         break;
 
                     case ConsoleKey.L:
-                        Console.Clear();
-                        pixels = Load("kep.csv");
-                        DrawPixels(pixels);
+                        Console.SetCursorPosition(0, Console.WindowHeight - 1);
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write("Betöltés neve: ");
+                        string loadName = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(loadName) && File.Exists(loadName + ".csv"))
+                        {
+                            Console.Clear();
+                            pixels = Load(loadName + ".csv");
+                            DrawPixels(pixels);
+                        }
                         Console.Write("\b \b");
+                        Console.SetCursorPosition(currentX, currentY);
                         break;
                 }
             }
