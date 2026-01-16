@@ -10,465 +10,239 @@ namespace feladatok09._12
         public int X { get; set; }
         public int Y { get; set; }
         public ConsoleColor Foreground { get; set; }
-
         public ConsoleColor Background { get; set; }
-
         public char Symbol { get; set; }
+
         public string ToCsv()
         {
             return $"{X},{Y},{(int)Foreground},{(int)Background},{Symbol}";
         }
+
         public static Pixel FromCsv(string csv)
         {
-            var splits = csv.Split(',');
-            return new Pixel()
+            var s = csv.Split(',');
+            return new Pixel
             {
-                X = int.Parse(splits[0]),
-                Y = int.Parse(splits[1]),
-                Foreground = (ConsoleColor)int.Parse(splits[2]),
-                Background = (ConsoleColor)int.Parse(splits[3]),
-                Symbol = splits[4][0]
+                X = int.Parse(s[0]),
+                Y = int.Parse(s[1]),
+                Foreground = (ConsoleColor)int.Parse(s[2]),
+                Background = (ConsoleColor)int.Parse(s[3]),
+                Symbol = s[4][0]
             };
         }
     }
+
     internal class Program
     {
+        static ConsoleColor currentBackground = ConsoleColor.White;
+
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.BufferHeight = Console.WindowHeight;
-            Console.Title = "NE NÉZD A CÍMÉT!";
+            Console.BackgroundColor = currentBackground;
+            Console.Clear();
+            DrawBottomBar();
             Console.CursorSize = 100;
-            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
 
             List<Pixel> pixels = new List<Pixel>();
+
             int color = 0;
             int theme = 0;
-            int e = 0;
+            int mode = 0;
             bool r = false;
             bool f = false;
-            bool showHelp = false;
+            bool showHelp = true;
 
             while (true)
             {
+                Console.BufferWidth = Console.WindowWidth;
+                Console.BufferHeight = Console.WindowHeight;
+
                 if (!showHelp)
                 {
                     (int x, int y) = Console.GetCursorPosition();
 
-                    Console.SetCursorPosition(0, Console.WindowTop + 1);
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.White;
-                    for (int i = 0; i < Console.WindowWidth; i++)
-                    {
-                        Console.Write("▄");
-                    }
-                    Console.SetCursorPosition(0, Console.WindowTop);
-                    Console.BackgroundColor = ConsoleColor.White;
-                    for (int i = 0; i < Console.WindowWidth; i++)
-                    {
-                        Console.Write(" ");
-                    }
+                    Console.SetCursorPosition(0, 0);
+                    Console.BackgroundColor = currentBackground;
+                    Console.Write(new string(' ', Console.WindowWidth));
 
-                    if (f == true)
+                    if (f)
                     {
-                        if (r == true)
+                        Console.SetCursorPosition(0, 0);
+                        Console.ForegroundColor = ConsoleColor.Black;
+
+                        if (r)
+                            Console.Write("RADÍR  ║ KÖV.HÁTTÉR: ");
+                        else if (mode == 0)
+                            Console.Write("SZÍN   ║ KÖV.HÁTTÉR: ");
+                        else
+                            Console.Write("MOZGÁS ║ KÖV.HÁTTÉR: ");
+
+                        Console.SetCursorPosition(21, 0);
+                        if (theme == 15) theme = 0;
+                        Console.ForegroundColor = (ConsoleColor)(theme + 1);
+                        Console.Write('█');
+
+                        if (mode == 0 && !r)
                         {
-                            Console.CursorTop = 0;
-                            Console.CursorLeft = 0;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write("RADÍR   ║ KÖV.HÁTTÉR: ");
-                            Console.CursorTop = 0;
-                            Console.CursorLeft = 21;
-                            if (theme == 15)
-                            {
-                                theme = 0;
-                            }
-                            Console.ForegroundColor = (ConsoleColor)theme + 1;
+                            Console.SetCursorPosition(7, 0);
+                            Console.ForegroundColor = (ConsoleColor)color;
                             Console.Write('█');
                         }
-                        else
-                        {
-                            if (e == 0)
-                            {
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 0;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write("MINTA  ║ KÖV.HÁTTÉR: ");
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 21;
-                                if (theme == 15)
-                                {
-                                    theme = 0;
-                                }
-                                Console.ForegroundColor = (ConsoleColor)theme + 1;
-                                Console.Write('█');
-                            }
-                            else if (e == 1)
-                            {
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 0;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write("SZÍN:  ║ KÖV.HÁTTÉR: ");
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 21;
-                                if (theme == 15)
-                                {
-                                    theme = 0;
-                                }
-                                Console.ForegroundColor = (ConsoleColor)theme + 1;
-                                Console.Write('█');
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 5;
-                                Console.ForegroundColor = (ConsoleColor)color;
-                                Console.Write('█');
-                            }
-                            else
-                            {
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 0;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write("MOZGÁS ║ KÖV.HÁTTÉR: ");
-                                Console.CursorTop = 0;
-                                Console.CursorLeft = 21;
-                                if (theme == 15)
-                                {
-                                    theme = 0;
-                                }
-                                Console.ForegroundColor = (ConsoleColor)theme + 1;
-                                Console.Write('█');
-                            }
-                        }
                     }
-                    else
-                    {
-                        Console.CursorTop = 0;
-                        Console.CursorLeft = 0;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write("       ");
-                        Console.SetCursorPosition(x, y);
-                    }
+
                     Console.SetCursorPosition(x, y);
-                    if (y == 1)
-                    {
-                        Console.CursorTop++;
-                    }
+                    if (y == 1) Console.CursorTop++;
                 }
                 else
                 {
                     ShowHelpMenu();
                 }
 
-                var keyInfo = Console.ReadKey(true);
-                var key = keyInfo.Key;
+                var key = Console.ReadKey(true).Key;
 
                 if (key == ConsoleKey.Escape)
                 {
                     showHelp = !showHelp;
                     if (!showHelp)
                     {
-                        Console.BackgroundColor = (ConsoleColor)theme;
+                        Console.BackgroundColor = currentBackground;
                         Console.Clear();
+                        DrawBottomBar();
                         Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
                     }
+                    continue;
                 }
 
-                (int currentX, int currentY) = Console.GetCursorPosition();
-
-                if (currentX >= Console.WindowWidth)
-                    Console.CursorLeft = Console.WindowWidth - 1;
-                if (currentY >= Console.WindowHeight)
-                    Console.CursorTop = Console.WindowHeight - 1;
-                if (currentX < 0)
-                    Console.CursorLeft = 0;
-                if (currentY < 0)
-                    Console.CursorTop = 0;
+                (int cx, int cy) = Console.GetCursorPosition();
 
                 switch (key)
                 {
-                    case ConsoleKey.DownArrow:
-                        if (r == true)
-                        {
-                            Console.Write(' ');
-                            if (currentY < Console.WindowHeight - 1)
-                                Console.CursorTop++;
-                            Console.CursorLeft--;
-                        }
-                        else
-                        {
-                            if (e == 0)
-                            {
-                                Console.BackgroundColor = (ConsoleColor)theme;
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.Write('♥');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '♥'
-                                });
-                                if (currentY < Console.WindowHeight - 1)
-                                    Console.CursorTop++;
-                                Console.CursorLeft--;
-                            }
-                            else if (e == 1)
-                            {
-                                Console.ForegroundColor = (ConsoleColor)color;
-                                Console.Write('█');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '█'
-                                });
-                                if (currentY < Console.WindowHeight - 1)
-                                    Console.CursorTop++;
-                                Console.CursorLeft--;
-                            }
-                            else
-                            {
-                                if (currentY < Console.WindowHeight - 1)
-                                    Console.CursorTop++;
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.UpArrow:
-                        if (r == true)
-                        {
-                            Console.Write(' ');
-                            if (currentY > 0)
-                                Console.CursorTop--;
-                            Console.CursorLeft--;
-                        }
-                        else
-                        {
-                            if (e == 0)
-                            {
-                                Console.BackgroundColor = (ConsoleColor)theme;
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.Write('♦');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '♦'
-                                });
-                                if (currentY > 0)
-                                    Console.CursorTop--;
-                                Console.CursorLeft--;
-                            }
-                            else if (e == 1)
-                            {
-                                Console.ForegroundColor = (ConsoleColor)color;
-                                Console.Write('█');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '█'
-                                });
-                                if (currentY > 0)
-                                    Console.CursorTop--;
-                                Console.CursorLeft--;
-                            }
-                            else
-                            {
-                                if (currentY > 0)
-                                    Console.CursorTop--;
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.RightArrow:
-                        if (r == true)
-                        {
-                            Console.Write(' ');
-                        }
-                        else
-                        {
-                            if (e == 0)
-                            {
-                                Console.BackgroundColor = (ConsoleColor)theme;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write('♠');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '♠'
-                                });
-                            }
-                            else if (e == 1)
-                            {
-                                Console.ForegroundColor = (ConsoleColor)color;
-                                Console.Write('█');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '█'
-                                });
-                            }
-                            else
-                            {
-                                if (currentX < Console.WindowWidth - 1)
-                                    Console.CursorLeft++;
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.LeftArrow:
-                        if (r == true)
-                        {
-                            Console.Write(' ');
-                            if (currentX > 0)
-                            {
-                                Console.CursorLeft--;
-                                Console.CursorLeft--;
-                            }
-                        }
-                        else
-                        {
-                            if (e == 0)
-                            {
-                                Console.BackgroundColor = (ConsoleColor)theme;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write('♣');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '♣'
-                                });
-                                if (currentX > 0)
-                                {
-                                    Console.CursorLeft--;
-                                    Console.CursorLeft--;
-                                }
-                            }
-                            else if (e == 1)
-                            {
-                                Console.ForegroundColor = (ConsoleColor)color;
-                                Console.Write('█');
-                                pixels.Add(new Pixel()
-                                {
-                                    X = currentX,
-                                    Y = currentY,
-                                    Foreground = (ConsoleColor)color,
-                                    Background = (ConsoleColor)theme,
-                                    Symbol = '█'
-                                });
-                                if (currentX > 0)
-                                {
-                                    Console.CursorLeft--;
-                                    Console.CursorLeft--;
-                                }
-                            }
-                            else
-                            {
-                                if (currentX > 0)
-                                {
-                                    Console.CursorLeft--;
-                                    Console.CursorLeft--;
-                                }
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.Spacebar:
-                        theme++;
-                        if (theme == 16)
-                        {
-                            theme = 0;
-                        }
-                        Console.BackgroundColor = (ConsoleColor)theme;
-                        Console.Clear();
-                        Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+                    case ConsoleKey.Q:
+                        mode++;
+                        if (mode == 2) mode = 0;
                         break;
 
                     case ConsoleKey.R:
                         r = !r;
-                        Console.Write("\b \b");
                         break;
 
                     case ConsoleKey.E:
                         color++;
-                        if (color == 16)
-                        {
-                            color = 0;
-                        }
-                        Console.Write("\b \b");
-                        break;
-
-                    case ConsoleKey.Q:
-                        Console.Write("\b \b");
-                        e++;
-                        if (e == 3)
-                        {
-                            e = 0;
-                        }
+                        if (color == 16) color = 0;
                         break;
 
                     case ConsoleKey.F1:
                         f = !f;
                         break;
 
+                    case ConsoleKey.Spacebar:
+                        theme++;
+                        if (theme == 16) theme = 0;
+                        currentBackground = (ConsoleColor)theme;
+                        Console.BackgroundColor = currentBackground;
+                        Console.Clear();
+                        DrawBottomBar();
+                        Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        HandleDraw(cx, cy, 0, 1, mode, r, color, pixels);
+                        break;
+
+                    case ConsoleKey.UpArrow:
+                        HandleDraw(cx, cy, 0, -1, mode, r, color, pixels);
+                        break;
+
+                    case ConsoleKey.RightArrow:
+                        HandleDraw(cx, cy, 1, 0, mode, r, color, pixels);
+                        break;
+
+                    case ConsoleKey.LeftArrow:
+                        HandleDraw(cx, cy, -1, 0, mode, r, color, pixels);
+                        break;
+
                     case ConsoleKey.S:
-                        Console.SetCursorPosition(0, Console.WindowHeight - 1);
-                        Console.Write("Mentés neve: ");
-                        string saveName = Console.ReadLine();
-                        Save(saveName + ".csv", pixels);
-                        Console.Write("\b \b");
-                        Console.SetCursorPosition(currentX, currentY);
+                        {
+                            Console.SetCursorPosition(0, Console.WindowHeight - 1);
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = currentBackground;
+                            Console.Write("Mentés neve: ");
+                            string saveName = Console.ReadLine();
+                            Save(saveName + ".csv", pixels);
+                            Console.SetCursorPosition(0, Console.WindowHeight - 1);
+                            Console.Write("Mentett fájl: " + saveName);
+                            DrawBottomBar();
+                        }
                         break;
 
                     case ConsoleKey.L:
-                        Console.SetCursorPosition(0, Console.WindowHeight - 1);
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write("Betöltés neve: ");
-                        string loadName = Console.ReadLine();
-                        if (!string.IsNullOrWhiteSpace(loadName) && File.Exists(loadName + ".csv"))
                         {
-                            Console.Clear();
-                            pixels = Load(loadName + ".csv");
-                            DrawPixels(pixels);
+                            Console.BackgroundColor = currentBackground;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            DrawBottomBar();
+                            Console.SetCursorPosition(0, Console.WindowHeight - 1);
+                            Console.Write("Betöltés neve: ");
+                            string loadName = Console.ReadLine();
+                            if (File.Exists(loadName + ".csv"))
+                            {
+                                pixels = Load(loadName + ".csv");
+                                DrawPixels(pixels);
+                            }
                         }
-                        Console.Write("\b \b");
-                        Console.SetCursorPosition(currentX, currentY);
                         break;
                 }
             }
         }
 
+        static void HandleDraw(int x, int y, int dx, int dy, int mode, bool r, int color, List<Pixel> pixels)
+        {
+            if (r)
+            {
+                Console.ForegroundColor = currentBackground;
+                Console.Write('█');
+                pixels.RemoveAll(p => p.X == x && p.Y == y);
+            }
+            else
+            {
+                char sym = '█';
+                Console.ForegroundColor = (ConsoleColor)color;
+
+                if (mode == 1)
+                {
+                    Console.SetCursorPosition(x + dx, y + dy);
+                    return;
+                }
+
+                Console.BackgroundColor = currentBackground;
+                Console.Write(sym);
+
+                pixels.Add(new Pixel
+                {
+                    X = x,
+                    Y = y,
+                    Foreground = Console.ForegroundColor,
+                    Background = currentBackground,
+                    Symbol = sym
+                });
+            }
+
+            Console.SetCursorPosition(x + dx, y + dy);
+        }
+
         static void ShowHelpMenu()
         {
-            Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
+            Console.Clear();
 
-            int centerX = Console.WindowWidth / 2;
-            int startY = 2;
+            int c = Console.WindowWidth / 2;
 
             string title = "SEGÍTSÉG";
-            Console.SetCursorPosition(centerX - title.Length / 2, startY);
+            Console.SetCursorPosition(c - title.Length / 2, 2);
             Console.Write(title);
 
-            string[] help = {
+            string[] help =
+            {
                 "← ↑ ↓ →   , Kurzor mozgatás       ",
                 "SPACE     , Háttérszín változtatás",
                 "R         , Radír                 ",
@@ -482,49 +256,61 @@ namespace feladatok09._12
 
             for (int i = 0; i < help.Length; i++)
             {
-                int x = centerX - help[i].Length / 2;
-                Console.SetCursorPosition(x, help.Length / 2 + i);
+                Console.SetCursorPosition(c - help[i].Length / 2, 5 + i);
                 Console.Write(help[i]);
             }
 
-            string esc = "Nyomj ESC-et a folytatáshoz";
-            Console.SetCursorPosition(centerX - esc.Length / 2, startY + help.Length + 4);
+            string esc = "ESC a folytatáshoz";
+            Console.SetCursorPosition(c - esc.Length / 2, 5 + help.Length + 2);
             Console.Write(esc);
         }
 
-        static void Save(string filename, List<Pixel> pixels)
+        static void DrawBottomBar()
         {
-            using (StreamWriter streamW = new StreamWriter(filename))
+            Console.SetCursorPosition(0, 1);
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = currentBackground;
+            for (int i = 0; i < Console.WindowWidth; i++)
+                Console.Write("▄");
+        }
+
+        static void Save(string file, List<Pixel> pixels)
+        {
+            using (StreamWriter sw = new StreamWriter(file))
             {
-                foreach (var pixel in pixels)
-                {
-                    streamW.WriteLine(pixel.ToCsv());
-                }
+                sw.WriteLine((int)currentBackground);
+                foreach (var p in pixels)
+                    sw.WriteLine(p.ToCsv());
             }
         }
-        static List<Pixel> Load(string filename)
+
+        static List<Pixel> Load(string file)
         {
-            List<Pixel> loadedPixels = new List<Pixel>();
-            if (!File.Exists(filename))
-                return loadedPixels;
+            List<Pixel> list = new List<Pixel>();
+            var lines = File.ReadAllLines(file);
+            if (lines.Length == 0) return list;
 
-            string[] lines = File.ReadAllLines(filename);
+            currentBackground = (ConsoleColor)int.Parse(lines[0]);
+            Console.BackgroundColor = currentBackground;
+            Console.Clear();
+            DrawBottomBar();
 
-            foreach (string line in lines)
-            {
-                loadedPixels.Add(Pixel.FromCsv(line));
-            }
+            for (int i = 1; i < lines.Length; i++)
+                list.Add(Pixel.FromCsv(lines[i]));
 
-            return loadedPixels;
+            return list;
         }
+
         static void DrawPixels(List<Pixel> pixels)
         {
-            foreach (var pixel in pixels)
+            foreach (var p in pixels)
             {
-                Console.SetCursorPosition(pixel.X, pixel.Y);
-                Console.ForegroundColor = pixel.Foreground;
-                Console.BackgroundColor = pixel.Background;
-                Console.Write(pixel.Symbol);
+                if (p.X >= Console.WindowWidth || p.Y >= Console.WindowHeight) continue;
+
+                Console.SetCursorPosition(p.X, p.Y);
+                Console.ForegroundColor = p.Foreground;
+                Console.BackgroundColor = p.Background;
+                Console.Write(p.Symbol);
             }
         }
     }
