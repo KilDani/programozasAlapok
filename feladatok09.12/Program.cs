@@ -20,7 +20,7 @@ namespace feladatok09._12
 
         public static Pixel FromCsv(string csv)
         {
-            var s = csv.Split(',');
+            string[] s = csv.Split(',');
             return new Pixel
             {
                 X = int.Parse(s[0]),
@@ -98,7 +98,7 @@ namespace feladatok09._12
                     ShowHelpMenu();
                 }
 
-                var key = Console.ReadKey(true).Key;
+                ConsoleKey key = Console.ReadKey(true).Key;
 
                 if (key == ConsoleKey.Escape)
                 {
@@ -276,26 +276,29 @@ namespace feladatok09._12
 
         static void Save(string file, List<Pixel> pixels)
         {
-            using (StreamWriter sw = new StreamWriter(file))
-            {
-                sw.WriteLine((int)currentBackground);
-                foreach (var p in pixels)
-                    sw.WriteLine(p.ToCsv());
-            }
+
+            List<string> lines = new List<string>();
+
+            lines.Add(((int)currentBackground).ToString());
+
+            for (int i = 0; i < pixels.Count; i++)
+                lines.Add(pixels[i].ToCsv());
+
+            File.WriteAllLines(file, lines.ToArray());
+
         }
 
         static List<Pixel> Load(string file)
         {
             List<Pixel> list = new List<Pixel>();
-            var lines = File.ReadAllLines(file);
-            if (lines.Length == 0) return list;
 
+            string[] lines = File.ReadAllLines(file);
             currentBackground = (ConsoleColor)int.Parse(lines[0]);
             Console.BackgroundColor = currentBackground;
             Console.Clear();
             DrawBottomBar();
 
-            for (int i = 1; i < lines.Length; i++)
+            for(int i = 1; i < lines.Length; i++)
                 list.Add(Pixel.FromCsv(lines[i]));
 
             return list;
@@ -303,10 +306,10 @@ namespace feladatok09._12
 
         static void DrawPixels(List<Pixel> pixels)
         {
-            foreach (var p in pixels)
+            for (int i = 0; i < pixels.Count; i++)
             {
+                Pixel p = pixels[i];
                 if (p.X >= Console.WindowWidth || p.Y >= Console.WindowHeight) continue;
-
                 Console.SetCursorPosition(p.X, p.Y);
                 Console.ForegroundColor = p.Foreground;
                 Console.BackgroundColor = p.Background;
