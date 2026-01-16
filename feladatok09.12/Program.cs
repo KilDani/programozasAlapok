@@ -40,7 +40,7 @@ namespace feladatok09._12
         {
             Console.BackgroundColor = currentBackground;
             Console.Clear();
-            DrawBottomBar();
+            Bar();
             Console.CursorSize = 100;
 
             List<Pixel> pixels = new List<Pixel>();
@@ -107,7 +107,7 @@ namespace feladatok09._12
                     {
                         Console.BackgroundColor = currentBackground;
                         Console.Clear();
-                        DrawBottomBar();
+                        Bar();
                         Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
                     }
                     continue;
@@ -141,24 +141,24 @@ namespace feladatok09._12
                         currentBackground = (ConsoleColor)theme;
                         Console.BackgroundColor = currentBackground;
                         Console.Clear();
-                        DrawBottomBar();
+                        Bar();
                         Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
                         break;
 
                     case ConsoleKey.DownArrow:
-                        HandleDraw(cx, cy, 0, 1, mode, r, color, pixels);
+                        Draw(cx, cy, 0, 1, mode, r, color, pixels);
                         break;
 
                     case ConsoleKey.UpArrow:
-                        HandleDraw(cx, cy, 0, -1, mode, r, color, pixels);
+                        Draw(cx, cy, 0, -1, mode, r, color, pixels);
                         break;
 
                     case ConsoleKey.RightArrow:
-                        HandleDraw(cx, cy, 1, 0, mode, r, color, pixels);
+                        Draw(cx, cy, 1, 0, mode, r, color, pixels);
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        HandleDraw(cx, cy, -1, 0, mode, r, color, pixels);
+                        Draw(cx, cy, -1, 0, mode, r, color, pixels);
                         break;
 
                     case ConsoleKey.S:
@@ -171,7 +171,7 @@ namespace feladatok09._12
                             Save(saveName + ".csv", pixels);
                             Console.SetCursorPosition(0, Console.WindowHeight - 1);
                             Console.Write("Mentett fájl: " + saveName);
-                            DrawBottomBar();
+                            Bar();
                         }
                         break;
 
@@ -179,7 +179,7 @@ namespace feladatok09._12
                         {
                             Console.BackgroundColor = currentBackground;
                             Console.ForegroundColor = ConsoleColor.Black;
-                            DrawBottomBar();
+                            Bar();
                             Console.SetCursorPosition(0, Console.WindowHeight - 1);
                             Console.Write("Betöltés neve: ");
                             string loadName = Console.ReadLine();
@@ -194,8 +194,19 @@ namespace feladatok09._12
             }
         }
 
-        static void HandleDraw(int x, int y, int dx, int dy, int mode, bool r, int color, List<Pixel> pixels)
+        static void Draw(int x, int y, int dx, int dy, int mode, bool r, int color, List<Pixel> pixels)
         {
+            int newX = x + dx;
+            int newY = y + dy;
+
+            int minX = 0;
+            int minY = 2;
+            int maxX = Console.WindowWidth - 1;        
+            int maxY = Console.WindowHeight - 1;
+
+            if (newX < minX || newX > maxX || newY < minY || newY > maxY)
+                return;
+
             if (r)
             {
                 Console.ForegroundColor = currentBackground;
@@ -265,7 +276,7 @@ namespace feladatok09._12
             Console.Write(esc);
         }
 
-        static void DrawBottomBar()
+        static void Bar()
         {
             Console.SetCursorPosition(0, 1);
             Console.ForegroundColor = ConsoleColor.Black;
@@ -296,11 +307,10 @@ namespace feladatok09._12
             currentBackground = (ConsoleColor)int.Parse(lines[0]);
             Console.BackgroundColor = currentBackground;
             Console.Clear();
-            DrawBottomBar();
+            Bar();
 
             for(int i = 1; i < lines.Length; i++)
                 list.Add(Pixel.FromCsv(lines[i]));
-
             return list;
         }
 
