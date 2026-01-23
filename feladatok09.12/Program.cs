@@ -283,6 +283,7 @@ namespace feladatok09._12
             Console.BackgroundColor = currentBackground;
             for (int i = 0; i < Console.WindowWidth; i++)
                 Console.Write("▄");
+            
         }
 
         static void Save(string file, List<Pixel> pixels)
